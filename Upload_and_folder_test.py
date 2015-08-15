@@ -8,13 +8,13 @@ import time
 newpath = r'Playlists'
 
 #To be changed in Kivy
-tempo = "Placeholder"
+#tempo = "Placeholder"
 name = os.listdir(r"C:\Users")[1]
 
-destination = "C:\Users\{0}\Documents\GitHub\Tech-Retreat-Demo\Playlists\{1}".format(name, tempo)
+#destination = r"C:\Users\{0}\Documents\GitHub\Tech-Retreat-Demo\Playlists\{1}".format(name, tempo)
 
-def create_dest(tempo):
-    destination = "C:\Users\{0}\Documents\GitHub\Tech-Retreat-Demo\Playlists\{1}".format(name, tempo)
+def create_dest(name, tempo):
+    return r"C:\Users\{0}\Documents\GitHub\Tech-Retreat-Demo\Playlists\{1}".format(name, tempo)
     
 
 #API Information
@@ -37,7 +37,7 @@ def sub_folder(mainF, sub):
     
 #Copies a given file
 def copy_file(src, tempo):
-    create_dest(tempo)
+    destination = create_dest(name, tempo)
     shutil.copy(src, destination)
 
 def wait_for_analysis(id):
@@ -49,25 +49,27 @@ def wait_for_analysis(id):
 
     list = []
 
-    for k,v in response['track']['audio_summary'].items():
+    #for k,v in response['track']['audio_summary'].items():
         #print "%32.32s %s" % (k, str(v))
-        if k == "tempo":
-            if v <= 108:
-                low.append(id)
-                low.append(v)
-                low.append(mp3)
-                print low
-                tempo = "Slow"
-                copy_file(mp3, tempo)
-            else:
-                high.append(id)
-                high.append(v)
-                high.append(mp3)
-                print high
-                tempo = "Fast"
-                print tempo
-                copy_file(mp3, tempo)
-                
+    tempo_speed = response['track']['audio_summary']['tempo']
+
+    if tempo_speed <= 108:
+        low.append(id)
+        low.append(tempo_speed)
+        low.append(mp3)
+        print low
+        tempo = "Slow"
+        copy_file(mp3, tempo)
+    else:
+        high.append(id)
+        high.append(tempo_speed)
+        high.append(mp3)
+        print high
+        tempo = "Fast"
+        
+        copy_file(mp3, tempo)
+  
+    
 mp3 = r"C:\Users\{0}\Music\13 Nutritious - Dash Cancel [Ultra Street Fighter IV].mp3".format(name)
 #mp3 = r"C:\Python work\tech retreat\Darude - Sandstorm.mp3"
 #type = "mp3"
@@ -79,8 +81,6 @@ def main():
     mainFolder(newpath)
     sub_folder(newpath, "Fast")
     sub_folder(newpath, "Slow")
-    
-    create_dest(tempo)
     
     f = open(mp3, 'rb')
     response = en.post('track/upload', track=f, filetype='mp3')
