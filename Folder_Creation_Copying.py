@@ -18,8 +18,8 @@ if not os.path.exists(newpath):
 def copy_file(src):
 	shutil.copy(src, destination)
 
-copy_file("C:\Users\Colin\Music\CopyFile.txt")
-copy_file("C:\Users\Colin\Music\TestMP3.mp3")
-copy_file("C:\Users\Colin\Music\Blazo - Cult Classic Records Present- Friends and Family - 03 Busy Dreaming.mp3")
-copy_file(r"C:\Users\Colin\Music\13 Nutritious - Dash Cancel [Ultra Street Fighter IV].mp3")
+copy_file("C:\Users\{0}\Music\CopyFile.txt").format(name)
+copy_file("C:\Users\{0}\Music\TestMP3.mp3").format(name)
+copy_file("C:\Users\{0}\Music\Blazo - Cult Classic Records Present- Friends and Family - 03 Busy Dreaming.mp3").format(name)
+copy_file(r"C:\Users\{0}\Music\13 Nutritious - Dash Cancel [Ultra Street Fighter IV].mp3").format(name)
 
