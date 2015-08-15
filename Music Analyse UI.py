@@ -49,6 +49,8 @@ def mainFolder(mp3):
 def sub_folder(mainF, sub):
 	if not os.path.exists("{0}/{1}".format(mainF, sub)):
 		os.mkdir("{0}/{1}".format(mainF, sub))
+	else:
+		return None
 	
 #Copies a given file
 def copy_file(src, tempo):
@@ -61,7 +63,7 @@ def wait_for_analysis(id):
 		response = en.get('track/profile', id=id, bucket=['audio_summary'])
 		if response['track']['status'] <> 'pending':
 			break
-		time.sleep(1)
+		time.sleep(0)
 
 	list = []
 
