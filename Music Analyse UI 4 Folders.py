@@ -45,7 +45,7 @@ def mainFolder(mp3):
     if not os.path.exists(folder + "\Playlists"):
         os.mkdir(folder + "\Playlists")
         print "Path Created"
-        return (folder + "\Playlists")
+    return (folder + "\Playlists")
     
     
 #Creates sub folder        
@@ -122,7 +122,7 @@ def run_code():
     a = mainFolder(mp3)
     sub_folder(a, "Studying") #Fast+Soft
     sub_folder(a, "Workout") #Fast + Loud
-    sub_folder(a, "Sleep") #Slow + Soft
+    sub_folder(a, "Sleeping") #Slow + Soft
     sub_folder(a, "Relaxing") #Slow + Loud
     
     f = open(mp3, 'rb')
