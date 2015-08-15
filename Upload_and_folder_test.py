@@ -87,12 +87,3 @@ def main():
     trid = response['track']['id']
     print 'track id is', trid
     wait_for_analysis(trid)
-
-    
-    #Loop though song list, copy all
-    #copy_file("C:\Users\{0}\Music\CopyFile.txt".format(name))
-    #copy_file("C:\Users\{0}\Music\TestMP3.mp3".format(name))
-    #copy_file("C:\Users\{0}\Music\Blazo - Cult Classic Records Present- Friends and Family - 03 Busy Dreaming.mp3".format(name))
-    #copy_file(r"C:\Users\{0}\Music\13 Nutritious - Dash Cancel [Ultra Street Fighter IV].mp3".format(name))
-
-main()

@@ -159,7 +159,11 @@ Builder.load_string("""
             text: "Start analysing!"
             pos_hint: {'center_x': 0.5, 'center_y': 0.25}
             size_hint: 0.6,0.2
-            on_release: root.analyse_music()
+            on_release: 
+				root.analyse_music()
+				root.manager.transition.direction = 'left'
+				root.manager.current = 'results'
+						
 
 <MainWidget>:
     screen_manager: screen_manager
@@ -168,7 +172,57 @@ Builder.load_string("""
         HomeScreen:
             id:home_screen
             name: 'home'
-            manager: 'screen_manager'
+            manager: screen_manager
+
+<ResultsScreen>:
+	FloatLayout:
+		Label:
+			text: "Here are your playlists"
+			font_size: 25
+			pos_hint: {'center_x': 0.5, 'center_y': 0.20}
+			size_hint: 0.6,0.4
+		
+		Button:
+			text: "Go Back"
+			pos_hint: {'center_x': 0.2, 'center_y': 0.10}
+			size_hint: 0.3,0.1
+			on_release:
+				root.manager.transition.direction = 'right'
+				root.manager.current = 'home'
+		
+		Button:
+			text: "Exercise Playlist"
+			pos_hint: {'center_x': 0.2, 'center_y': 0.70}
+			size_hint: 0.2,0.3
+		
+		Button:
+			text: "Studying Playlist"
+			pos_hint: {'center_x': 0.4, 'center_y': 0.70}
+			size_hint: 0.2,0.3
+		
+		Button:
+			text: "Sleep Playlist"
+			pos_hint: {'center_x': 0.6, 'center_y': 0.70}
+			size_hint: 0.2,0.3
+		
+		Button:
+			text: "Relaxing Playlist"
+			pos_hint: {'center_x': 0.8, 'center_y': 0.70}
+			size_hint: 0.2,0.3
+			
+<MainWidget>:
+	screen_manager: screen_manager
+	ScreenManager:
+		id:screen_manager
+		HomeScreen:
+			id:home_screen
+			name: 'home'
+			manager: screen_manager
+		ResultsScreen:
+			id:results_screen
+			name: 'results'
+			manager: screen_manager
+
 
 """)
 
@@ -189,6 +243,9 @@ class PopupWindow(Popup):
         global mp3
         mp3 = filename[0]
         self.dismiss(force = True)
+
+class ResultsScreen(Screen):
+	pass
 
 class MainWidget(FloatLayout):
     manager = ObjectProperty(None)
