@@ -31,7 +31,7 @@ def create_dest(name, tempo):
     
 
 #API Information
-en = pyen.Pyen("PM7SRY6GGZNM4QNTG")
+en = pyen.Pyen("XXY4BU0R8WQMMQQ64")
 en.trace = False
 
 Study = []
@@ -89,7 +89,7 @@ def wait_for_analysis(id):
         Workout.append(tempo_speed)
         Workout.append(mp3)
         print Workout
-        tempo = "Studying"
+        tempo = "Workout"
         copy_file(mp3, tempo)
     
     #Slow and Loud
@@ -163,23 +163,13 @@ Builder.load_string("""
 				root.analyse_music()
 				root.manager.transition.direction = 'left'
 				root.manager.current = 'results'
-						
-
-<MainWidget>:
-    screen_manager: screen_manager
-    ScreenManager:
-        id:screen_manager
-        HomeScreen:
-            id:home_screen
-            name: 'home'
-            manager: screen_manager
 
 <ResultsScreen>:
 	FloatLayout:
 		Label:
 			text: "Here are your playlists"
 			font_size: 25
-			pos_hint: {'center_x': 0.5, 'center_y': 0.20}
+			pos_hint: {'center_x': 0.5, 'center_y': 0.40}
 			size_hint: 0.6,0.4
 		
 		Button:
@@ -250,10 +240,10 @@ class ResultsScreen(Screen):
 class MainWidget(FloatLayout):
     manager = ObjectProperty(None)
         
-class MyApp(App):
+class MusicByMoodApp(App):
     def build(self):
         return MainWidget()
 
         
 if __name__ == '__main__':
-    MyApp().run()
+    MusicByMoodApp().run()
