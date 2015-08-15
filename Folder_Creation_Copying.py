@@ -11,12 +11,12 @@ destination = "C:\Users\{0}\Documents\GitHub\Tech-Retreat-Demo\Test".format(name
 
 #Creates new folder if not already existing
 if not os.path.exists(newpath):
-	os.mkdir(newpath)
-	print "Path Created"
+    os.mkdir(newpath)
+    print "Path Created"
 
 #Copies a given file
 def copy_file(src):
-	shutil.copy(src, destination)
+    shutil.copy(src, destination)
 
 copy_file("C:\Users\{0}\Music\CopyFile.txt".format(name))
 copy_file("C:\Users\{0}\Music\TestMP3.mp3".format(name))
