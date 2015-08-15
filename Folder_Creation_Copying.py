@@ -28,6 +28,8 @@ def main():
     
     mainFolder(newpath)
     sub_folder(newpath, "Playlist")
+    
+    #Loop though song list, copy all
     copy_file("C:\Users\{0}\Music\CopyFile.txt".format(name))
     copy_file("C:\Users\{0}\Music\TestMP3.mp3".format(name))
     copy_file("C:\Users\{0}\Music\Blazo - Cult Classic Records Present- Friends and Family - 03 Busy Dreaming.mp3".format(name))
