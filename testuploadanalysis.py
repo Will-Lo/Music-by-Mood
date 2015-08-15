@@ -1,11 +1,5 @@
-import pyen
-import time
-
-
 en = pyen.Pyen("PM7SRY6GGZNM4QNTG")
 en.trace = False
-
-analysis_dict = {}
 
 def wait_for_analysis(id):
     while True:
@@ -14,22 +8,29 @@ def wait_for_analysis(id):
             break
         time.sleep(1)
 
+    list = []
+
     for k,v in response['track']['audio_summary'].items():
-        print "%32.32s %s" % (k, str(v))
-        #analysis_dict.update({str(k), str(v)})
-        print type(k), type(v)
+        #print "%32.32s %s" % (k, str(v))
+        if k == "tempo":
+            if v <= 108:
+                low.append(id)
+                low.append(v)
+                low.append(mp3)
+                print low
+            else:
+                high.append(id)
+                high.append(v)
+                high.append(mp3)
+                print high
 
 
 
-#mp3 = "C:\Python work\tech retreat\Darude - Sandstorm.mp3"
+mp3 = r"C:\Python work\tech retreat\Darude - Sandstorm.mp3"
 #type = "mp3"
 
-f = open("Darude - Sandstorm.mp3", 'rb')
+f = open(mp3, 'rb')
 response = en.post('track/upload', track=f, filetype='mp3')
 trid = response['track']['id']
 print 'track id is', trid
 wait_for_analysis(trid)
-
-print analysis_dict
-
-a=1
