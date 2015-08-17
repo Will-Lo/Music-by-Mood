@@ -66,7 +66,7 @@ def wait_for_analysis(id):
         response = en.get('track/profile', id=id, bucket=['audio_summary'])
         if response['track']['status'] <> 'pending':
             break
-        time.sleep(0)
+        time.sleep(1)
 
     list = []
 
@@ -138,7 +138,6 @@ Builder.load_string("""
     title: 'Hello world'
     FileChooserListView:
         on_selection: root.selected(self.selection)
-        
 
 <HomeScreen>:
     id: my_widget
@@ -184,6 +183,9 @@ Builder.load_string("""
 			text: "Exercise Playlist"
 			pos_hint: {'center_x': 0.2, 'center_y': 0.70}
 			size_hint: 0.2,0.3
+			on_release:
+				root.manager.transition.direction = 'left'
+				root.manager.current = 'folder'
 		
 		Button:
 			text: "Studying Playlist"
@@ -200,6 +202,12 @@ Builder.load_string("""
 			pos_hint: {'center_x': 0.8, 'center_y': 0.70}
 			size_hint: 0.2,0.3
 			
+<Folder Screen>:
+	BoxLayout:
+		FileSystemLocal:
+
+
+
 <MainWidget>:
 	screen_manager: screen_manager
 	ScreenManager:
@@ -212,8 +220,10 @@ Builder.load_string("""
 			id:results_screen
 			name: 'results'
 			manager: screen_manager
-
-
+		FolderScreen:
+			id:folder_screen
+			name: 'folder'
+			manager: screen_manager
 """)
 
 class HomeScreen(Screen):
@@ -237,6 +247,9 @@ class PopupWindow(Popup):
 class ResultsScreen(Screen):
 	pass
 
+class FolderScreen(Screen):
+	pass
+	
 class MainWidget(FloatLayout):
     manager = ObjectProperty(None)
         
