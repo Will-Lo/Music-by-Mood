@@ -41,6 +41,13 @@ def sub_folder(mainF, sub):
 	else:
 		return None
 			
+#Get list of all files ending with a desired file extension
+def get_ext():
+	ext_list = []
+	for files in name:
+		if files.endswith(".mp3"):
+			ext.append(files)
+			
 #Copies a given file
 def copy_file(mp3, tempo):
 	destination = create_dest(name, tempo, mp3)
@@ -100,7 +107,9 @@ class Application(Tk):
 	
 	def get_file(self):
 		self.filename = askopenfilename()
+		self.filelist = get_ext()
 		print self.filename
+
 	
 	def run_code(self):     
 
