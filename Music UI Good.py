@@ -50,6 +50,14 @@ def get_ext(files):
 			ext_list.append(file)
 	return ext_list
 			
+#Adds a list of strings to a strings
+def list_to_string(files, ext):
+	file_str_list = []
+	for file in files:
+		merged_string = ext + "/" +file
+		file_str_list.append(merged_string)
+	return file_str_list
+
 #Copies a given file
 def copy_file(mp3, tempo):
 	destination = create_dest(name, tempo, mp3)
@@ -111,22 +119,38 @@ class Application(Tk):
 		self.filename = askopenfilename()
 	
 	def get_folder(self):
-		self.filelist = get_ext(os.listdir(askdirectory()))
-		print self.filelist
+		self.direct = askdirectory()
+		self.filelist = get_ext(os.listdir(self.direct))
+		self.directlist = list_to_string(self.filelist, self.direct)
 
-	def run_code(self):     
-
-		a = main_folder(self.filename)
-		sub_folder(a, "Studying") #Fast+Soft
-		sub_folder(a, "Workout") #Fast + Loud
-		sub_folder(a, "Sleeping") #Slow + Soft
-		sub_folder(a, "Relaxing") #Slow + Loud
-		f = open(self.filename, 'rb')
-		response = en.post('track/upload', track=f, filetype='mp3')
-		trid = response['track']['id']
-		print 'track id is', trid
-		wait_for_analysis(trid, self.filename)
-
+	def run_code(self):
+		
+		if not self.directlist:
+			a = main_folder(self.filename)
+			f = open(self.filename, 'rb')
+			response = en.post('track/upload', track=f, filetype='mp3')
+			trid = response['track']['id']
+			print 'track id is', trid
+			wait_for_analysis(trid, self.filename)
+			
+			sub_folder(a, "Studying") #Fast+Soft
+			sub_folder(a, "Workout") #Fast + Loud
+			sub_folder(a, "Sleeping") #Slow + Soft
+			sub_folder(a, "Relaxing") #Slow + Loud
+			
+		else:
+			for item in self.directlist:
+				a = main_folder(item)
+				sub_folder(a, "Studying") #Fast+Soft
+				sub_folder(a, "Workout") #Fast + Loud
+				sub_folder(a, "Sleeping") #Slow + Soft
+				sub_folder(a, "Relaxing") #Slow + Loud
+				f = open(item, 'rb')
+				response = en.post('track/upload', track=f, filetype='mp3')
+				trid = response['track']['id']
+				print 'track id is', trid
+				wait_for_analysis(trid, item)
+			
 	def createWidgets(self):
 		#button that closes the application
 		self.close = ttk.Button(text="close", command=self.quit, style = "C.TButton")
