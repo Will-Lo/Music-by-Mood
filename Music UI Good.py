@@ -1,6 +1,7 @@
 from Tkinter import *
 import ttk
 from tkFileDialog import askopenfilename
+from tkFileDialog import askdirectory
 
 import os 
 import sys
@@ -42,11 +43,12 @@ def sub_folder(mainF, sub):
 		return None
 			
 #Get list of all files ending with a desired file extension
-def get_ext():
+def get_ext(files):
 	ext_list = []
-	for files in name:
-		if files.endswith(".mp3"):
-			ext.append(files)
+	for file in files:
+		if file.endswith(".mp3"):
+			ext_list.append(file)
+	return ext_list
 			
 #Copies a given file
 def copy_file(mp3, tempo):
@@ -107,10 +109,11 @@ class Application(Tk):
 	
 	def get_file(self):
 		self.filename = askopenfilename()
-		self.filelist = get_ext()
-		print self.filename
-
 	
+	def get_folder(self):
+		self.filelist = get_ext(os.listdir(askdirectory()))
+		print self.filelist
+
 	def run_code(self):     
 
 		a = main_folder(self.filename)
@@ -118,7 +121,6 @@ class Application(Tk):
 		sub_folder(a, "Workout") #Fast + Loud
 		sub_folder(a, "Sleeping") #Slow + Soft
 		sub_folder(a, "Relaxing") #Slow + Loud
-		
 		f = open(self.filename, 'rb')
 		response = en.post('track/upload', track=f, filetype='mp3')
 		trid = response['track']['id']
@@ -134,7 +136,13 @@ class Application(Tk):
 		#button that opens a filename prompt
 		self.openfile = ttk.Button(text="select a file", command=self.get_file, style = "C.TButton")
 		self.openfile.pack()
-		self.openfile.place(relx=0.6, rely=0.3)
+		self.openfile.place(relx=0.6, rely=0.2)
+		
+		#button that opens a file directory prompt
+		self.openfile = ttk.Button(text="select a folder", command=self.get_folder, style = "C.TButton")
+		self.openfile.pack()
+		self.openfile.place(relx=0.6, rely=0.4)
+
 	
 		#button that does music analysis with the Echonest API
 		self.runcode = ttk.Button(text="start analyzing!", command=self.run_code, style = "C.TButton")
